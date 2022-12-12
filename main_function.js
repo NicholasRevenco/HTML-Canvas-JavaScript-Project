@@ -1,5 +1,5 @@
 /* Function draws the board */
-function setUpContext() {
+function settopContext() {
   canvas = document.getElementById("canvas_screen");
 
   canvas.width = window.innerWidth - 18;
@@ -12,13 +12,18 @@ function setUpContext() {
 
   return context;
 }
-setUpContext();
+settopContext();
 
-var x = 0;
-var y = 0;
+var x = 200;
+var y = 200;
 var width = 50;
 var height = 50;
 var move_value = 20;
+var edge_left = 0;
+var edge_top = 0;
+var edge_right = canvas.width;
+var edge_bottom = canvas.height;
+
 
 function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -30,25 +35,24 @@ function draw() {
 
 function shape_move(key_pressed) {
   key_value = key_pressed.key;
-  console.log(key_pressed.key);
-  if (key_value === "e") {
+  if ((key_value === "w") && !(edge_top + 42 > y)) {
     y -= move_value;
-  } else if (key_value === "s") {
+  } else if ((key_value === "a") && !(edge_left + 42 > x)) {
     x -= move_value;
-  } else if (key_value === "d") {
+  } else if ((key_value === "s") && !(edge_bottom - 42 < y)) {
     y += move_value;
-  } else if (key_value === "f") {
+  } else if ((key_value === "d") && !(edge_right - 42 < x)) {
     x += move_value;
-  } else if (key_value === "w") {
+  } else if ((key_value === "i") && !(edge_top + 42 > y) && !(edge_left + 42 > x)) {
     x -= move_value;
     y -= move_value;
-  } else if (key_value === "a") {
+  } else if ((key_value === "j") && !(edge_left + 42 > x) && !(edge_bottom - 42 < y)) {
     x -= move_value;
     y += move_value;
-  } else if (key_value === "g") {
+  } else if ((key_value === "k") && !(edge_bottom - 42 < y) && !(edge_right - 42 < x)) {
     x += move_value;
     y += move_value;
-  } else if (key_value === "r") {
+  } else if ((key_value === "l") && !(edge_right - 42 < x) && !(edge_top + 42 > y)) {
     x += move_value;
     y -= move_value;
   }
