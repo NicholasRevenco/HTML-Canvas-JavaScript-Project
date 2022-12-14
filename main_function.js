@@ -58,6 +58,20 @@ var circle_velocity = [0, 0, 0];
 
 // Change the position of the circle
 function applyVelocity (position, velocity) {
+  if (circle_position[0] < 30) {
+    circle_velocity[0] = 0;
+    circle_position[0] = 30;
+  } else if (circle_position[0] > canvas.width - 30) {
+    circle_velocity[0] = 0;
+    circle_position[0] = canvas.width - 30;
+  }
+  if (circle_position[1] < 30) {
+    circle_velocity[1] = 0;
+    circle_position[1] = 30;
+  } else if (circle_position[1] > canvas.height - 30) {
+    circle_velocity[1] = 0;
+    circle_position[1] = canvas.height - 30;
+  }
   var i = 0;
   for (i = 0; i < position.length; i++) {
     position[i] += velocity[i];
@@ -69,14 +83,11 @@ function myKeyDown(event) {
   keyStr = event.key;
   if (keyStr == 'w') {
     circle_velocity[1] -= 1;
-  }
-  if (keyStr == 'a') {
+  } else if (keyStr == 'a') {
     circle_velocity[0] -= 1;
-  }
-  if (keyStr == 's') {
+  } else if (keyStr == 's') {
     circle_velocity[1] += 1;
-  }
-  if (keyStr == 'd') {
+  } else if (keyStr == 'd') {
     circle_velocity[0] += 1;
   }
 }
@@ -89,7 +100,7 @@ function draw() {
   context.beginPath();
   context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
   context.stroke();
-  
+
   window.requestAnimationFrame(draw);
 }
 
