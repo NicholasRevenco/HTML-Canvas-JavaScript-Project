@@ -82,13 +82,16 @@ function applyVelocity (position, velocity) {
 function myKeyDown(event) {
   keyStr = event.key;
   if (keyStr == 'w') {
-    circle_velocity[1] -= 1;
+    circle_velocity[1] -= 2;
   } else if (keyStr == 'a') {
-    circle_velocity[0] -= 1;
+    circle_velocity[0] -= 2;
   } else if (keyStr == 's') {
-    circle_velocity[1] += 1;
+    circle_velocity[1] += 2;
   } else if (keyStr == 'd') {
-    circle_velocity[0] += 1;
+    circle_velocity[0] += 2;
+  } else if (keyStr == ' ') {
+    circle_velocity[0] = 0;
+    circle_velocity[1] = 0;
   }
 }
 
