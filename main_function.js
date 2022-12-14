@@ -1,5 +1,5 @@
 // Function draws the board
-function settopContext() {
+function set_up_context() {
   canvas = document.getElementById("canvas_screen");
 
   canvas.width = window.innerWidth - 18;
@@ -11,10 +11,11 @@ function settopContext() {
   context = canvas.getContext("2d");
   return context;
 }
-settopContext();
+
+set_up_context();
 
 // Global variables
-var x = 200;
+/*var x = 200;
 var y = 200;
 var width = 50;
 var height = 50;
@@ -22,18 +23,9 @@ var move_value = 20;
 var edge_left = 0;
 var edge_top = 0;
 var edge_right = canvas.width;
-var edge_bottom = canvas.height;
+var edge_bottom = canvas.height;*/
 
-// Draw the circle
-function draw() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.beginPath();
-  context.arc(x, y, 25, 0, 2 * Math.PI);
-  context.fillStyle = "red";
-  context.stroke();
-}
-
-function shape_move(key_pressed) {
+/*function shape_move(key_pressed) {
   key_value = key_pressed.key;
   // The borders and key presses
   if ((key_value === "w") && (edge_top + 42 < y)) {
@@ -58,9 +50,49 @@ function shape_move(key_pressed) {
     y -= move_value;
   }
   draw();
+}*/
+
+// Position and velocity of circle
+var circle_position = [0, 0, 25];
+var circle_velocity = [0, 0, 0];
+
+// Change the position of the circle
+function applyVelocity (position, velocity) {
+  var i = 0;
+  for (i = 0; i < position.length; i++) {
+    position[i] += velocity[i];
+  }
 }
 
-// Listeners
-window.addEventListener("keypress", shape_move);
+// Key strokes
+function myKeyDown(event) {
+  keyStr = event.key;
+  if (keyStr == 'w') {
+    circle_velocity[1] -= 1;
+  }
+  if (keyStr == 'a') {
+    circle_velocity[0] -= 1;
+  }
+  if (keyStr == 's') {
+    circle_velocity[1] += 1;
+  }
+  if (keyStr == 'd') {
+    circle_velocity[0] += 1;
+  }
+}
+
+// Draw the circle
+function draw() {
+  applyVelocity(circle_position, circle_velocity);
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.beginPath();
+  context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
+  context.stroke();
+  
+  window.requestAnimationFrame(draw);
+}
+
+document.addEventListener("keydown", myKeyDown);
 
 window.requestAnimationFrame(draw);
