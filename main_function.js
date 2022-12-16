@@ -63,7 +63,14 @@ function draw() {
 
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.beginPath();
+  context.fillStyle = "black";
+  context.fillRect(0, 0, 750, 750);
+  context.stroke();
+
+  context.beginPath();
+  context.fillStyle = "white";
   context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
+  context.fill();
   context.stroke();
 
   window.requestAnimationFrame(draw);
