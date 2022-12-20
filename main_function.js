@@ -1,15 +1,15 @@
 // Function draws the board
 function set_up_context() {
-  canvas = document.getElementById("canvas_screen");
+    canvas = document.getElementById("canvas_screen");
 
-  canvas.width = 750;
-  canvas.height = 750;
+    canvas.width = 750;
+    canvas.height = 750;
 
-  /* Temporary */
-  canvas.style.border = "1px solid black";
+    /* Temporary */
+    canvas.style.border = "1px solid black";
 
-  context = canvas.getContext("2d");
-  return context;
+    context = canvas.getContext("2d");
+    return context;
 }
 
 set_up_context();
@@ -18,62 +18,104 @@ set_up_context();
 var circle_position = [0, 0, 25];
 var circle_velocity = [0, 0, 0];
 
+var eliminate_position = [120, 200, 25];
+var eliminate_velocity = [Math.random(1, 2), Math.random(1, 2), 0, 2, 0];
+
+function eliminate_stop(eliminate_x, eliminate_y, player_x, player_y) {
+    if ((Math.abs(eliminate_x - player_x) < 50) && (Math.abs(eliminate_y - player_y) < 50)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // Change the position of the circle
-function applyVelocity (position, velocity) {
-  if (circle_position[0] < 30) {
-    circle_velocity[0] = 2;
-    circle_position[0] = 30;
-  } else if (circle_position[0] > canvas.width - 30) {
-    circle_velocity[0] = -2;
-    circle_position[0] = canvas.width - 30;
-  }
-  if (circle_position[1] < 30) {
-    circle_velocity[1] = 2;
-    circle_position[1] = 30;
-  } else if (circle_position[1] > canvas.height - 30) {
-    circle_velocity[1] = -2;
-    circle_position[1] = canvas.height - 30;
-  }
-  var i = 0;
-  for (i = 0; i < position.length; i++) {
-    position[i] += velocity[i];
-  }
+function apply_velocity(position, velocity) {
+    if (circle_position[0] < 30) {
+        circle_velocity[0] = 2;
+        circle_position[0] = 30;
+    } else if (circle_position[0] > canvas.width - 30) {
+        circle_velocity[0] = -2;
+        circle_position[0] = canvas.width - 30;
+    }
+    if (circle_position[1] < 30) {
+        circle_velocity[1] = 2;
+        circle_position[1] = 30;
+    } else if (circle_position[1] > canvas.height - 30) {
+        circle_velocity[1] = -2;
+        circle_position[1] = canvas.height - 30;
+    }
+    var i = 0;
+    for (i = 0; i < position.length; i++) {
+        position[i] += velocity[i];
+    }
+}
+
+function apply_velocity_eliminate(position, velocity) {
+    if (eliminate_position[0] < 30) {
+        eliminate_velocity[0] = 2;
+        eliminate_position[0] = 30;
+    } else if (eliminate_position[0] > canvas.width - 30) {
+        eliminate_velocity[0] = -2;
+        eliminate_position[0] = canvas.width - 30;
+    }
+    if (eliminate_position[1] < 30) {
+        eliminate_velocity[1] = 2;
+        eliminate_position[1] = 30;
+    } else if (eliminate_position[1] > canvas.height - 30) {
+        eliminate_velocity[1] = -2;
+        eliminate_position[1] = canvas.height - 30;
+    }
+    var i = 0;
+    for (i = 0; i < position.length; i++) {
+        position[i] += velocity[i];
+    }
 }
 
 // Key strokes
 function myKeyDown(event) {
-  keyStr = event.key;
-  if (keyStr == 'w') {
-    circle_velocity[1] -= 2;
-  } else if (keyStr == 'a') {
-    circle_velocity[0] -= 2;
-  } else if (keyStr == 's') {
-    circle_velocity[1] += 2;
-  } else if (keyStr == 'd') {
-    circle_velocity[0] += 2;
-  } else if (keyStr == ' ') {
-    circle_velocity[0] = circle_velocity[0] / 4;
-    circle_velocity[1] = circle_velocity[1] / 4;
-  }
+    keyStr = event.key;
+    if (keyStr == 'w') {
+        circle_velocity[1] -= 2;
+    } else if (keyStr == 'a') {
+        circle_velocity[0] -= 2;
+    } else if (keyStr == 's') {
+        circle_velocity[1] += 2;
+    } else if (keyStr == 'd') {
+        circle_velocity[0] += 2;
+    } else if (keyStr == ' ') {
+        circle_velocity[0] = circle_velocity[0] / 4;
+        circle_velocity[1] = circle_velocity[1] / 4;
+    }
 }
 
 // Draw the circle
 function draw() {
-  applyVelocity(circle_position, circle_velocity);
+    apply_velocity(circle_position, circle_velocity);
+    apply_velocity_eliminate(eliminate_position, eliminate_velocity);
 
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.beginPath();
-  context.fillStyle = "black";
-  context.fillRect(0, 0, 750, 750);
-  context.stroke();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.fillStyle = "black";
+    context.fillRect(0, 0, 750, 750);
+    context.stroke();
 
-  context.beginPath();
-  context.fillStyle = "white";
-  context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
-  context.fill();
-  context.stroke();
+    context.beginPath();
+    context.fillStyle = "red";
+    context.arc(eliminate_position[0], eliminate_position[1], eliminate_position[2], 0, 2 * Math.PI);
+    context.fill();
+    context.stroke();
 
-  window.requestAnimationFrame(draw);
+    context.beginPath();
+    context.fillStyle = "white";
+    context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
+    context.fill();
+    context.stroke();
+
+    if (eliminate_stop(eliminate_position[0], eliminate_position[1], circle_position[0], circle_position[1])) {
+        console.log("hello");
+    }
+    window.requestAnimationFrame(draw);
 }
 
 document.addEventListener("keydown", myKeyDown);
