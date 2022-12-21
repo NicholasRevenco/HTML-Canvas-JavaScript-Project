@@ -71,8 +71,13 @@ function myKeyDown(event) {
     }
 }
 
-class create_eliminate {
 
+function draw_circles(color, x_position) {
+    context.beginPath();
+    context.fillStyle = color;
+    context.arc(x_position[0], x_position[1], x_position[2], 0, 2 * Math.PI);
+    context.fill();
+    context.stroke();
 }
 
 // Draw the circle
@@ -81,29 +86,18 @@ function draw() {
     apply_bounce(eliminate_position, eliminate_velocity, eliminate_position, eliminate_velocity);
     apply_bounce(play_position, play_velocity, play_position, play_velocity);
 
+
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
     context.fillStyle = "black";
     context.fillRect(0, 0, 750, 750);
     context.stroke();
 
-    context.beginPath();
-    context.fillStyle = "rgb(245, 66, 66)";
-    context.arc(eliminate_position[0], eliminate_position[1], eliminate_position[2], 0, 2 * Math.PI);
-    context.fill();
-    context.stroke();
+    draw_circles("rgb(245, 66, 66)", eliminate_position);
 
-    context.beginPath();
-    context.fillStyle = "rgb(78, 245, 66)";
-    context.arc(play_position[0], play_position[1], play_position[2], 0, 2 * Math.PI);
-    context.fill();
-    context.stroke();
+    draw_circles("rgb(78, 245, 66)", play_position);
 
-    context.beginPath();
-    context.fillStyle = "white";
-    context.arc(circle_position[0], circle_position[1], circle_position[2], 0, 2 * Math.PI);
-    context.fill();
-    context.stroke();
+    draw_circles("white", circle_position);
 
     if (intersect(play_position[0], play_position[1], circle_position[0], circle_position[1])) {
         console.log("Point +1!");
