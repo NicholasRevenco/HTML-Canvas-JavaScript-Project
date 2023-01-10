@@ -15,6 +15,8 @@ function set_up_context() {
 set_up_context();
 
 // Position and velocity of circle
+var score_number = 0;
+
 var circle_position = [50, 50, 20];
 var circle_velocity = [0, 0, 0];
 
@@ -22,7 +24,7 @@ var eliminate_position = [700, 700, 15];
 var eliminate_velocity = [Math.round(Math.random()) ? 1 : -1 * 2, Math.round(Math.random()) ? 1 : -1 * 2, 0, 2, 0];
 
 var play_position = [0, 700, 15];
-var play_velocity = [Math.round(Math.random()) ? 1 : -1 * 2, Math.round(Math.random()) ? 1 : -1 * 2, 0, 2, 0];
+var play_velocity = [Math.round(Math.random()) ? 1 : -1 * 2, Math.round(Math.random()) ? 1 : -1 * 2, 0];
 
 function intersect(eliminate_x, eliminate_y, player_x, player_y) {
     if ((Math.abs(eliminate_x - player_x) < 35) && (Math.abs(eliminate_y - player_y) < 35)) {
@@ -99,10 +101,21 @@ function draw() {
 
     draw_circles("white", circle_position);
 
+    context.beginPath();
+    context.fillStyle = "white";
+    context.fillRect(canvas.width-120, 10, 110, 40);
+    context.stroke();
+
+
+    context.font = "bold 14px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('Score: ' + score_number,canvas.width-115, 35);
+    
+
     if (intersect(play_position[0], play_position[1], circle_position[0], circle_position[1])) {
-        console.log("Point +1!");
-        play_position[0] = Math.random(50, 750);
-        play_position[1] = Math.random(50, 750);
+        score_number += 1;
+        play_position[0] = Math.floor(Math.random() * 750) + 50;
+        play_position[1] = Math.floor(Math.random() * 750) + 50;
     }
 
     if (intersect(eliminate_position[0], eliminate_position[1], circle_position[0], circle_position[1])) {
