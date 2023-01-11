@@ -102,6 +102,26 @@ function win() {
     play_position[1] = Math.floor(Math.random() * 750) + 50;
 }
 
+function lose() {
+    
+    context.beginPath();
+    context.fillStyle = "black";
+    context.fillRect(canvas.width-120, 10, 110, 40);
+    context.stroke();
+
+    context.beginPath();
+    context.fillStyle = "white";
+    context.fillRect(275, 275, 200, 200);
+    context.stroke();
+    context.font = "bold 20px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('Game Over!', 305, 350);
+    context.font = "bold 14px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('Score: ' + score_number, 340, 400);
+    console.log('hello');
+}
+
 // Draw the circle
 function draw() {
 
@@ -125,11 +145,9 @@ function draw() {
     context.fillStyle = "white";
     context.fillRect(canvas.width-120, 10, 110, 40);
     context.stroke();
-
-
     context.font = "bold 14px verdana, sans-serif";
     context.fillStyle = "black";
-    context.fillText('Score: ' + score_number,canvas.width-115, 35);
+    context.fillText('Score: ' + score_number,canvas.width-100, 35);
     
 
     if (intersect(play_position[0], play_position[1], circle_position[0], circle_position[1])) {
@@ -140,7 +158,7 @@ function draw() {
         draw_circles("rgb(245, 66, 66)", eliminate_position_1);
         apply_bounce(eliminate_position_1, eliminate_velocity_1, eliminate_position_1, eliminate_velocity_1);
         if (intersect(eliminate_position_1[0], eliminate_position_1[1], circle_position[0], circle_position[1])) {
-            console.log("You lost!");
+            lose();
             return;
         }
     }
@@ -149,6 +167,7 @@ function draw() {
         draw_circles("rgb(245, 66, 66)", eliminate_position_2);
         apply_bounce(eliminate_position_2, eliminate_velocity_2, eliminate_position_2, eliminate_velocity_2);
         if (intersect(eliminate_position_2[0], eliminate_position_2[1], circle_position[0], circle_position[1])) {
+            lose();
             return;
         }
     }
@@ -157,7 +176,7 @@ function draw() {
         draw_circles("rgb(245, 66, 66)", eliminate_position_3);
         apply_bounce(eliminate_position_3, eliminate_velocity_3, eliminate_position_3, eliminate_velocity_3);
         if (intersect(eliminate_position_3[0], eliminate_position_3[1], circle_position[0], circle_position[1])) {
-            console.log("You lost!");
+            lose();
             return;
         }
     }
@@ -166,7 +185,7 @@ function draw() {
         draw_circles("rgb(245, 66, 66)", eliminate_position_4);
         apply_bounce(eliminate_position_4, eliminate_velocity_4, eliminate_position_4, eliminate_velocity_4);
         if (intersect(eliminate_position_4[0], eliminate_position_4[1], circle_position[0], circle_position[1])) {
-            console.log("You lost!");
+            lose();
             return;
         }
     }
@@ -175,12 +194,13 @@ function draw() {
         draw_circles("rgb(245, 66, 66)", eliminate_position_5);
         apply_bounce(eliminate_position_5, eliminate_velocity_5, eliminate_position_5, eliminate_velocity_5);
         if (intersect(eliminate_position_5[0], eliminate_position_5[1], circle_position[0], circle_position[1])) {
-            console.log("You lost!");
+            lose();
             return;
         }
     }
 
     if (intersect(eliminate_position[0], eliminate_position[1], circle_position[0], circle_position[1])) {
+        lose();
         return;
     }
 
