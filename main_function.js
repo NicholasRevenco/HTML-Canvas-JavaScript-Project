@@ -51,10 +51,10 @@ function apply_bounce(which_position, which_velocity, position, velocity) {
         which_position[0] = canvas.width - 30;
     }
     if (which_position[1] < 30) {
-        which_velocity[1] = (Math.random() * 4 + 2);
+        which_velocity[1] = Math.random() * 4 + 2;
         which_position[1] = 30;
     } else if (which_position[1] > canvas.height - 30) {
-        which_velocity[1] = -Math.random() * 4 + 2;
+        which_velocity[1] = -(Math.random() * 4 + 2);
         which_position[1] = canvas.height - 30;
     }
     var i = 0;
@@ -96,10 +96,14 @@ function intersect(eliminate_x, eliminate_y, player_x, player_y) {
     }
 }
 
-function bouncy_balls(ball_1, ball_2) {
+function bouncy_balls(ball_1, ball_2, ball_1_velocity, ball_2_velocity) {
     if (Math.abs(ball_1[0] - ball_2[0]) < 30) {
         if (Math.abs(ball_1[1] - ball_2[1]) < 30) {
-            
+            ball_1_velocity[0] = -ball_1_velocity[0];
+            ball_2_velocity[0] = -ball_2_velocity[0];
+            ball_1_velocity[1] = -ball_1_velocity[1];
+            ball_2_velocity[1] = -ball_2_velocity[1];
+            console.log("bounce");
         }
     }
 }
@@ -148,7 +152,7 @@ function draw() {
     apply_bounce(circle_position, circle_velocity, circle_position, circle_velocity);
     apply_bounce(eliminate_position, eliminate_velocity, eliminate_position, eliminate_velocity);
     apply_bounce(play_position, play_velocity, play_position, play_velocity);
-    bouncy_balls(eliminate_position, play_position);
+    bouncy_balls(eliminate_position, play_position, eliminate_velocity, play_velocity);
 
     context.beginPath();
     context.fillStyle = "white";
@@ -166,8 +170,8 @@ function draw() {
     if (score_number >= 2) {
         draw_circles("rgb(245, 66, 66)", eliminate_position_1);
         apply_bounce(eliminate_position_1, eliminate_velocity_1, eliminate_position_1, eliminate_velocity_1);
-        bouncy_balls(eliminate_position_1, play_position);
-        bouncy_balls(eliminate_position_1, eliminate_position);
+        bouncy_balls(eliminate_position_1, play_position, eliminate_velocity_1, play_velocity);
+        bouncy_balls(eliminate_position_1, eliminate_position, eliminate_velocity_1, eliminate_velocity);
         if (intersect(eliminate_position_1[0], eliminate_position_1[1], circle_position[0], circle_position[1])) {
             lose();
             return;
@@ -176,9 +180,9 @@ function draw() {
     if (score_number >= 4) {
         draw_circles("rgb(245, 66, 66)", eliminate_position_2);
         apply_bounce(eliminate_position_2, eliminate_velocity_2, eliminate_position_2, eliminate_velocity_2);
-        bouncy_balls(eliminate_position_2, play_position);
-        bouncy_balls(eliminate_position_2, eliminate_position);
-        bouncy_balls(eliminate_position_2, eliminate_position_1);
+        bouncy_balls(eliminate_position_2, play_position, eliminate_velocity_2, play_velocity);
+        bouncy_balls(eliminate_position_2, eliminate_position, eliminate_velocity_2, eliminate_velocity);
+        bouncy_balls(eliminate_position_2, eliminate_position_1, eliminate_velocity_2, eliminate_velocity_1);
         if (intersect(eliminate_position_2[0], eliminate_position_2[1], circle_position[0], circle_position[1])) {
             lose();
             return;
