@@ -112,8 +112,8 @@ function win() {
     // Add score
     score_number += 1;
     // Change the position of the green ball
-    play_position[0] = Math.floor(Math.random() * 750) + 50;
-    play_position[1] = Math.floor(Math.random() * 750) + 50;
+    play_position[0] = Math.floor(Math.random() * 650) + 50;
+    play_position[1] = Math.floor(Math.random() * 650) + 50;
 }
 
 // If the player intersects with a red ball
@@ -205,6 +205,10 @@ function draw() {
         // Draw circles and bounce off the walls or other balls
         draw_circles("rgb(245, 66, 66)", eliminate_position_3);
         apply_bounce(eliminate_position_3, eliminate_velocity_3, eliminate_position_3, eliminate_velocity_3);
+        bouncy_balls(eliminate_position_3, play_position, eliminate_velocity_3, play_velocity);
+        bouncy_balls(eliminate_position_3, eliminate_position, eliminate_velocity_3, eliminate_velocity);
+        bouncy_balls(eliminate_position_3, eliminate_position_1, eliminate_velocity_3, eliminate_velocity_1);
+        bouncy_balls(eliminate_position_3, eliminate_position_2, eliminate_velocity_3, eliminate_velocity_2);
         // Loose function is called
         if (intersect(eliminate_position_3[0], eliminate_position_3[1], circle_position[0], circle_position[1])) {
             lose();
@@ -217,6 +221,11 @@ function draw() {
         // Draw circles and bounce off the walls or other balls
         raw_circles("rgb(245, 66, 66)", eliminate_position_4);
         apply_bounce(eliminate_position_4, eliminate_velocity_4, eliminate_position_4, eliminate_velocity_4);
+        bouncy_balls(eliminate_position_4, play_position, eliminate_velocity_3, play_velocity);
+        bouncy_balls(eliminate_position_4, eliminate_position, eliminate_velocity_3, eliminate_velocity);
+        bouncy_balls(eliminate_position_4, eliminate_position_1, eliminate_velocity_4, eliminate_velocity_1);
+        bouncy_balls(eliminate_position_4, eliminate_position_2, eliminate_velocity_4, eliminate_velocity_2);
+        bouncy_balls(eliminate_position_4, eliminate_position_3, eliminate_velocity_4, eliminate_velocity_3);
         // Loose function is called
         if (intersect(eliminate_position_4[0], eliminate_position_4[1], circle_position[0], circle_position[1])) {
             lose();
