@@ -16,6 +16,7 @@ set_up_context();
 
 var score_number = 0;
 var loose_count = 0;
+var high_score = -1;
 
 // Position and velocity of circle
 var circle_position = [50, 50, 20];
@@ -125,22 +126,28 @@ function lose() {
     context.fillRect(canvas.width-120, 10, 110, 40);
     context.stroke();
 
+    if (score_number > high_score) {
+        high_score = score_number;
+    }
+    loose_count += 1;
+
     // New score is drawn
     context.beginPath();
     context.fillStyle = "white";
-    context.fillRect(275, 275, 200, 200);
+    context.fillRect(250, 250, 250, 250);
     context.stroke();
     context.font = "bold 20px verdana, sans-serif";
     context.fillStyle = "black";
-    context.fillText('Game Over!', 305, 340);
+    context.fillText('Game Over!', 305, 320);
     context.font = "bold 14px verdana, sans-serif";
     context.fillStyle = "black";
-    context.fillText('Score: ' + score_number, 340, 390);
+    context.fillText('Score: ' + score_number, 340, 365);
+    context.font = "bold 14px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('High Score: ' + high_score, 320, 395);
     context.font = "bold 10px verdana, sans-serif";
     context.fillStyle = "black";
     context.fillText('Press "R" to play again!', 310, 440);
-
-    loose_count += 1;
 }
 
 // Restart the board
