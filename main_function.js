@@ -15,6 +15,7 @@ function set_up_context() {
 set_up_context();
 
 var score_number = 0;
+var loose_count = 0;
 
 // Position and velocity of circle
 var circle_position = [50, 50, 20];
@@ -131,10 +132,50 @@ function lose() {
     context.stroke();
     context.font = "bold 20px verdana, sans-serif";
     context.fillStyle = "black";
-    context.fillText('Game Over!', 305, 350);
+    context.fillText('Game Over!', 305, 340);
     context.font = "bold 14px verdana, sans-serif";
     context.fillStyle = "black";
-    context.fillText('Score: ' + score_number, 340, 400);
+    context.fillText('Score: ' + score_number, 340, 390);
+    context.font = "bold 10px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('Press "R" to play again!', 310, 440);
+
+    loose_count += 1;
+}
+
+// Restart the board
+function restart_function() {
+    keyStr = event.key;
+    if (keyStr == 'r') {
+        if (loose_count > 0) {
+            score_number = 0;
+            loose_count = 0;
+
+            // Position and velocity of circle
+            circle_position = [50, 50, 20];
+            circle_velocity = [0, 0, 0];
+
+            eliminate_position = [Math.floor(Math.random() * 20) + 680, Math.floor(Math.random() * 20) + 680, 15];
+            eliminate_velocity = [Math.floor(Math.random() * 50), Math.floor(Math.random() * 50), 0];
+
+            eliminate_position_1 = [Math.floor(Math.random() * 20) + 680, Math.floor(Math.random() * 20) + 680, 15];
+            eliminate_velocity_1 = [Math.floor(Math.random() * 50), Math.floor(Math.random() * 50), 0];
+
+            eliminate_position_2 = [Math.floor(Math.random() * 20) + 680, Math.floor(Math.random() * 20) + 680, 15];
+            eliminate_velocity_2 = [Math.floor(Math.random() * 50), Math.floor(Math.random() * 50), 0];
+
+            eliminate_position_3 = [Math.floor(Math.random() * 20) + 680, Math.floor(Math.random() * 20) + 680, 15];
+            eliminate_velocity_3 = [Math.floor(Math.random() * 50), Math.floor(Math.random() * 50), 0];
+
+            eliminate_position_4 = [Math.floor(Math.random() * 20) + 680, Math.floor(Math.random() * 20) + 680, 15];
+            eliminate_velocity_4 = [Math.floor(Math.random() * 50), Math.floor(Math.random() * 50), 0];
+
+            play_position = [0, 700, 15];
+            play_velocity = [Math.round(Math.random()) ? 1 : -1 * 2, Math.round(Math.random()) ? 1 : -1 * 2, 0];
+
+            draw()
+        }
+    }
 }
 
 // Looped function
@@ -242,5 +283,6 @@ function draw() {
 }
 
 document.addEventListener("keydown", myKeyDown);
+document.addEventListener("keydown", restart_function);
 
 window.requestAnimationFrame(draw);
