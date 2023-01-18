@@ -221,21 +221,6 @@ function draw() {
 
     // The circles bounce off of each other
     bouncy_balls(eliminate_position, play_position, eliminate_velocity, play_velocity);
-
-    // Scoreboard
-    context.beginPath();
-    context.fillStyle = "white";
-    context.fillRect(canvas.width-150, 10, 140, 140);
-    context.stroke();
-    context.font = "bold 20px verdana, sans-serif";
-    context.fillStyle = "black";
-    context.fillText('CHAOS', canvas.width-118, 45);
-    context.font = "bold 14px verdana, sans-serif";
-    context.fillStyle = "black";
-    context.fillText('Score: ' + score_number, canvas.width-110, 85);
-    context.font = "bold 12px verdana, sans-serif";
-    context.fillStyle = "black";
-    context.fillText('High Score: ' + high_score, canvas.width-120, 115);
     
     // If the player intersects with a green ball
     if (intersect(play_position[0], play_position[1], circle_position[0], circle_position[1])) {
@@ -306,6 +291,21 @@ function draw() {
         lose();
         return;
     }
+
+    // Scoreboard
+    context.beginPath();
+    context.fillStyle = "white";
+    context.fillRect(canvas.width-150, 10, 140, 140);
+    context.stroke();
+    context.font = "bold 20px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('CHAOS', canvas.width-118, 45);
+    context.font = "bold 14px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('Score: ' + score_number, canvas.width-110, 85);
+    context.font = "bold 12px verdana, sans-serif";
+    context.fillStyle = "black";
+    context.fillText('High Score: ' + high_score, canvas.width-120, 115);
 
     window.requestAnimationFrame(draw);
 }
