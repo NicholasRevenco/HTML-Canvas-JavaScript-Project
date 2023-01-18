@@ -18,6 +18,10 @@ var score_number = 0;
 var loose_count = 0;
 var high_score = -1;
 
+var beep_sound = document.getElementById("beep_sound_id");   
+var death = document.getElementById("death_id");   
+var win_sound = document.getElementById("win_id");   
+
 // Position and velocity of circle
 var circle_position = [50, 50, 20];
 var circle_velocity = [0, 0, 0];
@@ -45,16 +49,20 @@ function apply_bounce(which_position, which_velocity, position, velocity) {
     if (which_position[0] < 30) {
         which_velocity[0] = Math.random() * 4 + 2;
         which_position[0] = 30;
+        beep_sound.play();
     } else if (which_position[0] > canvas.width - 30) {
         which_velocity[0] = -(Math.random() * 4 + 2);
         which_position[0] = canvas.width - 30;
+        beep_sound.play();
     }
     if (which_position[1] < 30) {
         which_velocity[1] = Math.random() * 4 + 2;
         which_position[1] = 30;
+        beep_sound.play();
     } else if (which_position[1] > canvas.height - 30) {
         which_velocity[1] = -(Math.random() * 4 + 2);
         which_position[1] = canvas.height - 30;
+        beep_sound.play();
     }
     var i = 0;
     for (i = 0; i < position.length; i++) {
@@ -91,6 +99,7 @@ function draw_circles(color, x_position) {
 // If a ball intersects with another ball
 function intersect(eliminate_x, eliminate_y, player_x, player_y) {
     if ((Math.abs(eliminate_x - player_x) < 25) && (Math.abs(eliminate_y - player_y) < 25)) {
+        beep_sound.play();
         return true;
     } else {
         return false;
@@ -105,21 +114,25 @@ function bouncy_balls(ball_1, ball_2, ball_1_velocity, ball_2_velocity) {
             ball_2_velocity[0] = -ball_2_velocity[0];
             ball_1_velocity[1] = -ball_1_velocity[1];
             ball_2_velocity[1] = -ball_2_velocity[1];
+            beep_sound.play();
         }
     }
 }
 
 // If the player intersects with a green ball
 function win() {
+    beep_sound.play();
     // Add score
     score_number += 1;
     // Change the position of the green ball
     play_position[0] = Math.floor(Math.random() * 650) + 50;
     play_position[1] = Math.floor(Math.random() * 650) + 50;
+    win_sound.play();
 }
 
 // If the player intersects with a red ball
 function lose() {
+    beep_sound.play();
     // Covers the previous score
     context.beginPath();
     context.fillStyle = "black";
@@ -148,6 +161,8 @@ function lose() {
     context.font = "bold 10px verdana, sans-serif";
     context.fillStyle = "black";
     context.fillText('Press "R" to play again!', 310, 440);
+
+    death.play();
 }
 
 // Restart the board
