@@ -15,7 +15,7 @@ function set_up_context() {
 set_up_context();
 
 var score_number = 0;
-var loose_count = 0;
+var lose_count = 0;
 var high_score = 0;
 
 var beep_sound = document.getElementById("beep_sound_id");   
@@ -142,7 +142,7 @@ function lose() {
     if (score_number > high_score) {
         high_score = score_number;
     }
-    loose_count += 1;
+    lose_count += 1;
 
     // New score is drawn
     context.beginPath();
@@ -169,9 +169,9 @@ function lose() {
 function restart_function() {
     keyStr = event.key;
     if (keyStr == 'r') {
-        if (loose_count > 0) {
+        if (lose_count > 0) {
             score_number = 0;
-            loose_count = 0;
+            lose_count = 0;
 
             // Position and velocity of circle
             circle_position = [50, 50, 20];
@@ -249,7 +249,7 @@ function draw() {
         apply_bounce(eliminate_position_1, eliminate_velocity_1, eliminate_position_1, eliminate_velocity_1);
         bouncy_balls(eliminate_position_1, play_position, eliminate_velocity_1, play_velocity);
         bouncy_balls(eliminate_position_1, eliminate_position, eliminate_velocity_1, eliminate_velocity);
-        // Loose function is called
+        // lose function is called
         if (intersect(eliminate_position_1[0], eliminate_position_1[1], circle_position[0], circle_position[1])) {
             lose();
             return;
@@ -263,7 +263,7 @@ function draw() {
         bouncy_balls(eliminate_position_2, play_position, eliminate_velocity_2, play_velocity);
         bouncy_balls(eliminate_position_2, eliminate_position, eliminate_velocity_2, eliminate_velocity);
         bouncy_balls(eliminate_position_2, eliminate_position_1, eliminate_velocity_2, eliminate_velocity_1);
-        // Loose function is called
+        // lose function is called
         if (intersect(eliminate_position_2[0], eliminate_position_2[1], circle_position[0], circle_position[1])) {
             lose();
             return;
@@ -278,7 +278,7 @@ function draw() {
         bouncy_balls(eliminate_position_3, eliminate_position, eliminate_velocity_3, eliminate_velocity);
         bouncy_balls(eliminate_position_3, eliminate_position_1, eliminate_velocity_3, eliminate_velocity_1);
         bouncy_balls(eliminate_position_3, eliminate_position_2, eliminate_velocity_3, eliminate_velocity_2);
-        // Loose function is called
+        // lose function is called
         if (intersect(eliminate_position_3[0], eliminate_position_3[1], circle_position[0], circle_position[1])) {
             lose();
             return;
@@ -295,7 +295,7 @@ function draw() {
         bouncy_balls(eliminate_position_4, eliminate_position_1, eliminate_velocity_4, eliminate_velocity_1);
         bouncy_balls(eliminate_position_4, eliminate_position_2, eliminate_velocity_4, eliminate_velocity_2);
         bouncy_balls(eliminate_position_4, eliminate_position_3, eliminate_velocity_4, eliminate_velocity_3);
-        // Loose function is called
+        // lose function is called
         if (intersect(eliminate_position_4[0], eliminate_position_4[1], circle_position[0], circle_position[1])) {
             lose();
             return;
