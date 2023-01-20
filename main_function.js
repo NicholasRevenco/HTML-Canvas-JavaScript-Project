@@ -14,10 +14,12 @@ function set_up_context() {
 
 set_up_context();
 
+// Score variables
 var score_number = 0;
 var lose_count = 0;
 var high_score = 0;
 
+// Sound variables
 var beep_sound = document.getElementById("beep_sound_id");   
 var death = document.getElementById("death_id");   
 var win_sound = document.getElementById("win_id");   
@@ -310,6 +312,7 @@ function draw() {
     window.requestAnimationFrame(draw);
 }
 
+// Key listeners
 document.addEventListener("keydown", myKeyDown);
 document.addEventListener("keydown", restart_function);
 
